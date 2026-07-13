@@ -462,6 +462,45 @@ body.menu-open .mobile-menu .btn { animation-delay:.4s; }
 .cookie .btn { padding: 11px 20px; font-size: .9rem; }
 .cookie .btn .ico { display: none; }
 
+/* ---------- Instant estimate quiz ---------- */
+.calc { max-width: 640px; margin-inline: auto; background: #fff; border-radius: var(--r-lg); box-shadow: var(--sh-3), inset 0 0 0 1px var(--line); overflow: hidden; }
+.calc__bar { height: 6px; background: var(--cloud); }
+.calc__barfill { display: block; height: 100%; width: 20%; background: linear-gradient(90deg, var(--ocean-500), var(--coral)); border-radius: 0 6px 6px 0; transition: width .5s var(--ease); }
+.calc__body { padding: clamp(24px, 4vw, 40px); }
+.calc__count { font-size: .8rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--ocean-600); }
+.calc__step { display: none; }
+.calc__step.active { display: block; animation: calcIn .45s var(--ease); }
+@keyframes calcIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.calc__q { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.3rem, 3vw, 1.75rem); letter-spacing: -.01em; margin: 10px 0 20px; }
+.calc__opts { display: grid; gap: 12px; }
+.calc__opt {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; text-align: left;
+  width: 100%; padding: 17px 20px; border-radius: var(--r-md); font-size: 1.02rem; font-weight: 600; color: var(--ink);
+  background: var(--cloud); box-shadow: inset 0 0 0 1.5px transparent;
+  transition: box-shadow .25s var(--ease), background .25s var(--ease), transform .2s var(--ease); cursor: pointer;
+}
+.calc__opt::after { content: ""; width: 22px; height: 22px; border-radius: 50%; flex: none; box-shadow: inset 0 0 0 2px var(--ocean-300); transition: box-shadow .2s, background .2s; }
+.calc__opt:hover { background: var(--ocean-100); transform: translateY(-1px); }
+.calc__opt.sel { background: var(--ocean-100); box-shadow: inset 0 0 0 2px var(--ocean-500); }
+.calc__opt.sel::after { background: var(--ocean-600); box-shadow: inset 0 0 0 2px var(--ocean-600), inset 0 0 0 5px #fff; }
+.calc__nav { display: flex; justify-content: space-between; align-items: center; margin-top: 24px; }
+.calc__back { font-weight: 700; color: var(--ink-soft); font-size: .95rem; padding: 8px 4px; }
+.calc__back:hover { color: var(--ocean-700); }
+.calc__back[hidden] { visibility: hidden; }
+
+/* Result */
+.calc__result { display: none; text-align: center; }
+.calc__result.active { display: block; animation: calcIn .5s var(--ease); }
+.calc__result .rlabel { font-size: .82rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--ocean-600); }
+.calc__amt { font-family: var(--font-display); font-weight: 600; font-size: clamp(3rem, 9vw, 4.6rem); line-height: 1; letter-spacing: -.02em; margin: 10px 0 6px; }
+.calc__amt .grad-text { background: linear-gradient(100deg, var(--ocean-600), var(--coral)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.calc__note { color: var(--ink-soft); font-size: .95rem; max-width: 42ch; margin: 0 auto 24px; }
+.calc__cta { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+.calc__restart { margin-top: 18px; font-weight: 700; color: var(--ink-faint); font-size: .9rem; }
+.calc__restart:hover { color: var(--ocean-700); }
+.calc__summary { display: inline-flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 20px; }
+.calc__summary span { background: var(--cloud); border-radius: var(--r-pill); padding: 6px 13px; font-size: .82rem; font-weight: 600; color: var(--ink-soft); }
+
 /* ---------- Reveal on scroll (progressive enhancement) ----------
    Content is visible by default; only hidden once JS confirms it can reveal it. */
 .reveal { transition: opacity .8s var(--ease-soft), transform .8s var(--ease-soft), filter .8s var(--ease-soft); }

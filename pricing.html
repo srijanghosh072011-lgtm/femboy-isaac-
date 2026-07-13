@@ -49,12 +49,83 @@
   <div class="container">
     <div class="breadcrumb reveal"><a href="index.html">Home</a><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg><span>Pricing</span></div>
     <h1 class="reveal">Straight prices, <span class="grad-text">no surprises</span></h1>
-    <p class="lead reveal" data-d="1">Every house has a different number of windows, so treat these as starting points. Whatever I quote you before I start is what you pay — I don't tack on extras at the end.</p>
+    <p class="lead reveal" data-d="1">Every house is a bit different, so the quickest way to a number is the 60-second estimate below. Whatever I quote you before I start is what you pay — I don't tack on extras at the end.</p>
   </div>
 </section>
 
-<section class="section section--tight">
+<!-- ============ INSTANT ESTIMATE QUIZ ============ -->
+<section class="section section--tight" id="estimate">
   <div class="container">
+    <div class="section-head center reveal">
+      <span class="eyebrow coral"><span class="dot"></span> 60-second estimate</span>
+      <h2 style="margin-top:16px">Get a price without the wait</h2>
+      <p class="lead center-lead">Three quick questions and I'll show you a ballpark on the spot — no email needed. I'll always confirm the exact price before any work starts.</p>
+    </div>
+
+    <div class="calc reveal" data-calc>
+      <div class="calc__bar"><span class="calc__barfill" data-fill></span></div>
+      <div class="calc__body">
+
+        <div class="calc__step active" data-key="size">
+          <div class="calc__count" data-count>Question 1 of 3</div>
+          <h3 class="calc__q">What kind of home is it?</h3>
+          <div class="calc__opts">
+            <button type="button" class="calc__opt" data-score="0">Condo or apartment</button>
+            <button type="button" class="calc__opt" data-score="0.35">Small bungalow</button>
+            <button type="button" class="calc__opt" data-score="0.7">Average single-storey house</button>
+            <button type="button" class="calc__opt" data-score="1">Large home / lots of windows</button>
+            <button type="button" class="calc__opt" data-flag="two">Two-storey house</button>
+          </div>
+        </div>
+
+        <div class="calc__step" data-key="windows">
+          <div class="calc__count" data-count>Question 2 of 3</div>
+          <h3 class="calc__q">Roughly how many windows?</h3>
+          <div class="calc__opts">
+            <button type="button" class="calc__opt" data-score="0">Just a few (under 10)</button>
+            <button type="button" class="calc__opt" data-score="0.5">An average amount (10–20)</button>
+            <button type="button" class="calc__opt" data-score="1">Lots (20+)</button>
+            <button type="button" class="calc__opt" data-score="0.5">Not sure</button>
+          </div>
+        </div>
+
+        <div class="calc__step" data-key="io">
+          <div class="calc__count" data-count>Question 3 of 3</div>
+          <h3 class="calc__q">Inside and out, or just the outside?</h3>
+          <div class="calc__opts">
+            <button type="button" class="calc__opt" data-mult="1">Just the outside</button>
+            <button type="button" class="calc__opt" data-mult="1.3">Inside &amp; out</button>
+          </div>
+        </div>
+
+        <div class="calc__result" data-result>
+          <div class="rlabel" data-rlabel>Your estimate</div>
+          <div class="calc__amt" data-amount><span class="grad-text">$—</span></div>
+          <div class="calc__summary" data-summary></div>
+          <p class="calc__note" data-rnote>A ballpark for a single-storey home — I'll confirm the exact price before I start. No surprises.</p>
+          <div class="calc__cta">
+            <a class="btn btn--coral btn--lg" href="tel:+13060000000">Book a call now <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+            <a class="btn btn--ghost btn--lg" href="contact.html">Send me the details</a>
+          </div>
+          <button type="button" class="calc__restart" data-restart>↺ Start over</button>
+        </div>
+
+        <div class="calc__nav">
+          <button type="button" class="calc__back" data-back hidden>← Back</button>
+          <span style="font-size:.8rem;color:var(--ink-faint)">No email needed to see your price</span>
+        </div>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:16px;color:var(--ink-faint);font-size:.85rem" class="reveal">Two-storey home? I focus on single-storey for now — <a href="contact.html" style="color:var(--ocean-700);font-weight:700">give me a call</a> and we'll chat.</p>
+  </div>
+</section>
+
+<section class="section section--tight section--cloud">
+  <div class="container">
+    <div class="section-head center reveal">
+      <span class="eyebrow"><span class="dot"></span> Rough menu</span>
+      <h2 style="margin-top:16px">Or here's the ballpark by clean</h2>
+    </div>
     <div class="price-grid">
       <div class="price reveal" data-d="1"><div class="card"><div class="card__inner">
         <h3>Outside only</h3><div class="price__amt">$149<small>+</small></div>
