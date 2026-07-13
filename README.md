@@ -12,21 +12,17 @@ folder and it works.
 
 ## What's inside
 
+**Scope:** residential window cleaning, Regina only. (No eavestroughs, no
+commercial, no out-of-town pages — those were removed by request.)
+
 | File | Page |
 |---|---|
-| `index.html` | Home (hero, services, why-us, process, stats, reviews, service areas, pricing, FAQ, quote form) |
-| `services.html` | Full services list |
+| `index.html` | Home (hero, services, why-us, process, stats, reviews, service area, pricing, FAQ, quote form) — the main "window cleaning Regina" page |
+| `residential-window-cleaning-regina.html` | Local SEO — "house window cleaning Regina" |
+| `services.html` | What's included (window services only) |
 | `pricing.html` | Pricing tiers + factors |
 | `about.html` | About Isaac |
 | `contact.html` | Contact + free-quote form |
-| `window-cleaning-regina.html` | **Local SEO** — main Regina landing page |
-| `residential-window-cleaning-regina.html` | Local SEO — residential service |
-| `commercial-window-cleaning-regina.html` | Local SEO — commercial service |
-| `eavestrough-cleaning-regina.html` | Local SEO — eavestrough service |
-| `window-cleaning-white-city.html` | Local SEO — White City |
-| `window-cleaning-emerald-park.html` | Local SEO — Emerald Park |
-| `window-cleaning-pilot-butte.html` | Local SEO — Pilot Butte |
-| `window-cleaning-lumsden.html` | Local SEO — Lumsden |
 | `privacy.html` / `terms.html` | Legal (PIPEDA + CASL aware) |
 | `404.html` | Custom not-found page |
 | `styles.css` / `main.js` | Shared design system + interactions |
@@ -117,14 +113,12 @@ Send Isaac this list. Grouped by where it's used on the site.
 - [ ] **Insurance / WCB** — confirm coverage so we can say "insured" truthfully
 
 ### Services & pricing
-- [ ] Which services he offers (residential, commercial, eavestroughs, screens, post-construction?)
-- [ ] Real **starting prices** for each / how he likes to quote
-- [ ] Any packages, bundles, or seasonal plans
-- [ ] Add-on pricing (screens, tracks, etc.)
+- [ ] Real **starting prices** (the $149 / $249 figures are samples) and how he likes to quote
+- [ ] Confirm the add-ons offered (screens & tracks, hard-water spots, second-storey, new-build)
+- [ ] Does he want the spring & fall repeat plan?
 
 ### Service area
-- [ ] Confirm the towns to keep (Regina + White City, Emerald Park, Pilot Butte, Lumsden)
-- [ ] Any areas to add or remove; how far he'll travel
+- [ ] Site is set to **Regina only**. If he'll travel to a nearby town, tell me and I'll add it back.
 
 ### Trust & social proof
 - [ ] 3–6 real **customer reviews / testimonials** (name + neighbourhood)
