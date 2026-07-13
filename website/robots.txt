@@ -1,0 +1,22 @@
+# Prairie Shine Window Cleaning — robots.txt
+# Allow all search + AI crawlers (we WANT visibility in AI answers).
+# Replace the domain below with the real one before launch.
+
+User-agent: *
+Allow: /
+
+# Explicitly welcome the AI retrieval crawlers that drive citations.
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: Claude-SearchBot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://prairieshinewindows.ca/sitemap.xml
