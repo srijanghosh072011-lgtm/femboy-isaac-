@@ -1,1 +1,154 @@
-# locking-in-
+# Prairie Shine Window Cleaning — Website
+
+A fast, self-contained marketing website for **Isaac Larson Orton's** window
+cleaning business in **Regina, Saskatchewan**. Built as plain HTML, CSS and
+JavaScript — **no build step, no framework, no dependencies**. Just upload the
+folder and it works.
+
+> **"Prairie Shine Window Cleaning" is a working/placeholder brand name.**
+> Isaac can keep it or swap it for his real business name (see replacements below).
+
+---
+
+## What's inside
+
+| File | Page |
+|---|---|
+| `index.html` | Home (hero, services, why-us, process, stats, reviews, service areas, pricing, FAQ, quote form) |
+| `services.html` | Full services list |
+| `pricing.html` | Pricing tiers + factors |
+| `about.html` | About Isaac |
+| `contact.html` | Contact + free-quote form |
+| `window-cleaning-regina.html` | **Local SEO** — main Regina landing page |
+| `residential-window-cleaning-regina.html` | Local SEO — residential service |
+| `commercial-window-cleaning-regina.html` | Local SEO — commercial service |
+| `eavestrough-cleaning-regina.html` | Local SEO — eavestrough service |
+| `window-cleaning-white-city.html` | Local SEO — White City |
+| `window-cleaning-emerald-park.html` | Local SEO — Emerald Park |
+| `window-cleaning-pilot-butte.html` | Local SEO — Pilot Butte |
+| `window-cleaning-lumsden.html` | Local SEO — Lumsden |
+| `privacy.html` / `terms.html` | Legal (PIPEDA + CASL aware) |
+| `404.html` | Custom not-found page |
+| `styles.css` / `main.js` | Shared design system + interactions |
+| `favicon.svg` | Site icon |
+| `robots.txt` / `sitemap.xml` | Search + AI crawler visibility |
+
+## Design
+
+- **Palette:** ocean/sky **blue** (primary) + **coral sunset** accent (the "sun" —
+  chosen instead of yellow for a bright summer feel) + fresh aqua + warm cream.
+- **Fonts:** Bricolage Grotesque (headings) + Plus Jakarta Sans (body), via Google Fonts.
+- Light, airy, "summer vibes" throughout — inspired by, but deliberately not a
+  copy of, sunnydayz.ca.
+
+## Run it locally
+
+Just open `index.html` in a browser, or serve the repo folder:
+
+```bash
+python3 -m http.server 8000   # then visit http://localhost:8000
+```
+
+## Deploy (pick one — all free tiers work)
+
+All the site files live at the **repository root** (so `index.html` is the
+homepage). That's what GitHub Pages and other hosts expect.
+
+- **GitHub Pages:** Settings → Pages → Build from a branch → pick the branch
+  and folder **`/ (root)`** → Save. A `.nojekyll` file is included so Pages
+  serves the files as-is. Give it a minute, then load the Pages URL.
+- **Netlify / Vercel / Cloudflare Pages:** connect this repo (no build command,
+  publish directory = root) or drag-and-drop the folder. HTTPS is automatic.
+- Any web host: upload the files so `index.html` sits at the site root.
+
+---
+
+## ⚠️ Before launch — replace these placeholders
+
+Everything below is a stand-in. Do a global find-and-replace across all `.html`
+files:
+
+| Find | Replace with |
+|---|---|
+| `Prairie Shine Window Cleaning` | Isaac's real business name (if changing) |
+| `(306) 000-0000` and `+13060000000` | Real phone number |
+| `hello@prairieshinewindows.ca` | Real email address |
+| `prairieshinewindows.ca` | Real domain (in canonical/OG/schema/sitemap/robots) |
+| `REPLACE_WITH_FORM_ENDPOINT` | Form backend URL (see below) |
+
+Also:
+- **About page** (`about.html`): replace the "IO" avatar block with a real photo
+  of Isaac and rewrite the bio in his own words.
+- **Reviews** (`index.html`): swap the sample testimonials for Isaac's real Google
+  reviews. (Only mark up reviews in schema that are visible on the page.)
+- **Prices**: confirm the real numbers ($149 / $249 / $349 / $129 are samples).
+- **Photos**: the sky/cream gradient panels are intentional placeholders — drop in
+  real before/after job photos where you see `.media-frame` blocks.
+- **Business hours & service areas**: confirm they're correct everywhere.
+- **Social links**: the footer icons point to `#` — set the real Facebook /
+  Instagram / Google Business Profile URLs.
+
+## Wiring up the quote form
+
+The form is static, so it needs a form backend to actually email Isaac. Easiest
+free options — sign up, get an endpoint URL, paste it into every
+`action="REPLACE_WITH_FORM_ENDPOINT"`:
+
+- **Formspree** (formspree.io) — paste your form URL.
+- **Web3Forms** (web3forms.com) — add your access key.
+- **Netlify Forms** — if hosting on Netlify, add `netlify` to the `<form>` tag.
+
+The form already includes client-side validation and a hidden honeypot field for
+basic spam protection. For more, add Cloudflare Turnstile or reCAPTCHA.
+
+---
+
+## 📋 Info to collect from Isaac
+
+Send Isaac this list. Grouped by where it's used on the site.
+
+### Business basics
+- [ ] Confirmed **business name** (keep "Prairie Shine" or use his own)
+- [ ] **Phone** number (and is texting OK?)
+- [ ] **Email** address
+- [ ] **Domain** he wants (e.g. isaacwindowcleaning.ca)
+- [ ] Exact **service hours** (days + times)
+- [ ] Is he a registered business? Legal entity name for the footer/policies
+- [ ] **Insurance / WCB** — confirm coverage so we can say "insured" truthfully
+
+### Services & pricing
+- [ ] Which services he offers (residential, commercial, eavestroughs, screens, post-construction?)
+- [ ] Real **starting prices** for each / how he likes to quote
+- [ ] Any packages, bundles, or seasonal plans
+- [ ] Add-on pricing (screens, tracks, etc.)
+
+### Service area
+- [ ] Confirm the towns to keep (Regina + White City, Emerald Park, Pilot Butte, Lumsden)
+- [ ] Any areas to add or remove; how far he'll travel
+
+### Trust & social proof
+- [ ] 3–6 real **customer reviews / testimonials** (name + neighbourhood)
+- [ ] **Google Business Profile** link (create one if he hasn't — huge for local)
+- [ ] Facebook / Instagram links if he has them
+- [ ] Years in business / anything that builds credibility
+
+### About & photos
+- [ ] A friendly **photo of Isaac** (and/or his vehicle/logo)
+- [ ] A short bio in his own words — why he started, what he cares about
+- [ ] Real **before/after job photos** (great for the site AND Google Business Profile)
+- [ ] A **logo**, if he has one (otherwise the current icon works fine)
+
+### Legal
+- [ ] Name + contact for the **privacy contact person** (PIPEDA requires this)
+- [ ] Have a lawyer glance at `privacy.html` and `terms.html` before going live
+
+---
+
+## Post-launch quick wins (from the pre-launch playbook)
+
+- Set up **Google Business Profile** (single most important thing for local leads)
+  and keep the name/phone/address identical to this site.
+- Submit `sitemap.xml` in **Google Search Console**.
+- Add **GA4** and mark phone-click + form-submit as key events.
+- Confirm HTTPS is on and `robots.txt` isn't blocking anything.
+- Ask happy customers for Google reviews early and often.
