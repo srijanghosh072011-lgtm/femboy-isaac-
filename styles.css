@@ -501,6 +501,15 @@ body.menu-open .mobile-menu .btn { animation-delay:.4s; }
 .calc__summary { display: inline-flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 20px; }
 .calc__summary span { background: var(--cloud); border-radius: var(--r-pill); padding: 6px 13px; font-size: .82rem; font-weight: 600; color: var(--ink-soft); }
 
+/* ---------- Booking ---------- */
+.booking-embed { width: 100%; min-height: 660px; border: 0; border-radius: var(--r-lg); box-shadow: var(--sh-3), inset 0 0 0 1px var(--line); background: #fff; }
+.booking-ph { border-radius: var(--r-lg); background: linear-gradient(180deg, #fff, var(--cloud)); box-shadow: var(--sh-2), inset 0 0 0 1.5px var(--line); padding: clamp(28px, 5vw, 48px); text-align: center; display: flex; flex-direction: column; align-items: center; gap: 14px; min-height: 420px; justify-content: center; }
+.booking-ph h3 { font-size: 1.35rem; }
+.booking-ph p { max-width: 40ch; font-size: .96rem; }
+.booking-ph .btn, .booking-ph .btn-block { margin-top: 6px; }
+.cal-ico { width: 66px; height: 66px; border-radius: 19px; background: linear-gradient(150deg, var(--ocean-100), #fff); display: grid; place-items: center; box-shadow: inset 0 0 0 1px rgba(18,115,230,.15), 0 10px 22px -12px rgba(18,115,230,.5); }
+.cal-ico svg { width: 32px; height: 32px; stroke: var(--ocean-600); fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+
 /* ---------- Reveal on scroll (progressive enhancement) ----------
    Content is visible by default; only hidden once JS confirms it can reveal it. */
 .reveal { transition: opacity .8s var(--ease-soft), transform .8s var(--ease-soft), filter .8s var(--ease-soft); }

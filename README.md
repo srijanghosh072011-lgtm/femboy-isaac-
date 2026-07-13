@@ -97,6 +97,30 @@ free options — sign up, get an endpoint URL, paste it into every
 The form already includes client-side validation and a hidden honeypot field for
 basic spam protection. For more, add Cloudflare Turnstile or reCAPTCHA.
 
+## Set up online booking (`booking.html`)
+
+The booking page is ready — it just needs a free scheduler connected. Pick one,
+then paste one `<iframe>` line into `booking.html` (there's a labelled comment
+showing exactly where). The scheduler runs entirely on their side; nothing to
+build or maintain.
+
+**Option A — Google Calendar (free, uses Isaac's Gmail):**
+1. Open Google Calendar → **Create → Appointment schedule**.
+2. Name it (e.g. "Window cleaning"), set his availability and slot length.
+3. Click **Share → embed**, copy the `<iframe>` code.
+4. In `booking.html`, find the `BOOKING WIDGET GOES HERE` comment, paste the
+   iframe (add `class="booking-embed"`), and delete the `.booking-ph` block.
+
+**Option B — Calendly (free tier, syncs to Google Calendar):**
+1. Sign up at calendly.com, create an event type (e.g. "Window cleaning").
+2. Connect his Google Calendar so booked times block out automatically.
+3. Copy the event link, and in `booking.html` use:
+   `<iframe class="booking-embed" src="https://calendly.com/your-name/window-cleaning" title="Book a window cleaning"></iframe>`
+
+Until that's connected, the booking page shows a tidy "call or text to book"
+panel, so it's never broken. The quiz's **Book your clean** button and the
+footer **Book online** link already point at this page.
+
 ---
 
 ## 📋 Info to collect from Isaac
