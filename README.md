@@ -1,12 +1,13 @@
-# Prairie Shine Window Cleaning — Website
+# Viewshine Window Cleaning — Website
 
 A fast, self-contained marketing website for **Isaac Larson Orton's** window
 cleaning business in **Regina, Saskatchewan**. Built as plain HTML, CSS and
 JavaScript — **no build step, no framework, no dependencies**. Just upload the
 folder and it works.
 
-> **"Prairie Shine Window Cleaning" is a working/placeholder brand name.**
-> Isaac can keep it or swap it for his real business name (see replacements below).
+> **Real business:** Viewshine Window Cleaning · Regina, SK · **(306) 552-7242** —
+> which already has a **Google Business Profile** (big for local SEO). Still
+> placeholders: the domain, email and business hours (see below).
 
 ---
 
@@ -33,7 +34,7 @@ commercial, no out-of-town pages — those were removed by request.)
 
 - **Palette:** ocean/sky **blue** (primary) + **coral sunset** accent (the "sun" —
   chosen instead of yellow for a bright summer feel) + fresh aqua + warm cream.
-- **Fonts:** Bricolage Grotesque (headings) + Plus Jakarta Sans (body), via Google Fonts.
+- **Fonts:** Montserrat (headings, light weights) + Plus Jakarta Sans (body), via Google Fonts.
 - Light, airy, "summer vibes" throughout — inspired by, but deliberately not a
   copy of, sunnydayz.ca.
 
@@ -64,13 +65,15 @@ homepage). That's what GitHub Pages and other hosts expect.
 Everything below is a stand-in. Do a global find-and-replace across all `.html`
 files:
 
+Business name and phone are now the **real** ones (Viewshine Window Cleaning /
+(306) 552-7242). Still placeholders to replace:
+
 | Find | Replace with |
 |---|---|
-| `Prairie Shine Window Cleaning` | Isaac's real business name (if changing) |
-| `(306) 000-0000` and `+13060000000` | Real phone number |
-| `hello@prairieshinewindows.ca` | Real email address |
-| `prairieshinewindows.ca` | Real domain (in canonical/OG/schema/sitemap/robots) |
+| `hello@viewshinewindows.ca` | Real email address |
+| `viewshinewindows.ca` | Real domain, once registered (in canonical/OG/schema/sitemap/robots) |
 | `REPLACE_WITH_FORM_ENDPOINT` | Form backend URL (see below) |
+| "By appointment" | Real business hours, once confirmed (they should match the Google Business Profile) |
 
 Also:
 - **About page** (`about.html`): replace the "IO" avatar block with a real photo
@@ -128,13 +131,19 @@ footer **Book online** link already point at this page.
 Send Isaac this list. Grouped by where it's used on the site.
 
 ### Business basics
-- [ ] Confirmed **business name** (keep "Prairie Shine" or use his own)
-- [ ] **Phone** number (and is texting OK?)
+- [x] **Business name** — Viewshine Window Cleaning ✓
+- [x] **Phone** — (306) 552-7242 ✓ (confirm texting is OK)
 - [ ] **Email** address
-- [ ] **Domain** he wants (e.g. isaacwindowcleaning.ca)
-- [ ] Exact **service hours** (days + times)
+- [ ] **Domain** he wants (e.g. viewshinewindows.ca) + register it
+- [ ] Exact **service hours** — site says "by appointment" for now; set real hours to match the Google Business Profile
 - [ ] Is he a registered business? Legal entity name for the footer/policies
 - [ ] **Insurance / WCB** — confirm coverage so we can say "insured" truthfully
+
+### Google Business Profile (already exists — big win)
+- [ ] **Claim/verify** it if he hasn't (the "Is this your business?" link)
+- [ ] Add the **website URL** once it's live
+- [ ] Add **hours** and a few **photos**
+- [ ] Ask happy customers for the **first reviews** (currently zero)
 
 ### Services & pricing
 - [ ] Real **starting prices** (the $149 / $249 figures are samples) and how he likes to quote
