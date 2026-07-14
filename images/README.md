@@ -1,29 +1,32 @@
-# Photos — drop Isaac's real images here
+# Photos — quick add checklist
 
-The site is built around **real photo slots**. Until a file below exists, that
-spot shows a tasteful deep-blue (or coral) fallback panel with a small filename
-hint — nothing looks broken. The moment you add a correctly-named file here, it
-appears automatically. No code changes needed.
+The site is wired for the photos below. `hero.jpg` is already in. The other
+slots show a tidy blue/coral placeholder until a file with the **exact name**
+lands in this folder — then it appears automatically.
 
-**Two rules:** put the file **in this `images/` folder** (not the repo root), and
-name it **exactly** as shown below — all lowercase, `.jpg`.
+## Fastest way (one upload, ~3 min)
+1. Open each Pexels link below → **Free Download** (large size). All Pexels
+   photos are free for commercial use, **no attribution, no legal risk**.
+2. Rename each download to the exact filename shown.
+3. On GitHub: open this `images/` folder → **Add file → Upload files** → drag all
+   of them in at once → Commit.
+4. Tell me they're up and I'll resize/compress each one so pages stay fast
+   (like I did with the hero).
 
-Use landscape JPGs unless noted. Keep each under ~400 KB (e.g. squoosh.app) so
-pages stay fast. `hero.jpg` is already in — the rest are optional but make the
-site much stronger.
+> Don't want to rename them? Just upload them with any names and tell me which
+> is which — I'll sort it out.
 
-| Filename | Used on | Shot idea | Min size |
-|---|---|---|---|
-| `hero.jpg` ✅ | Home hero (full-screen) | Isaac cleaning a window — already added. | 2400×1400 |
-| `why-clean.jpg` | Home — "Why" section | Close-up of a flawless, streak-free pane / a clear reflection. | 1400×1120 |
-| `service-area.jpg` | Home — service area | Isaac or the vehicle heading to a Regina job; a Regina street/home. | 1400×1120 |
-| `residential.jpg` | Home-windows page | Big, bright windows on a Regina house. | 1400×1120 |
-| `method.jpg` | Services page | Hands-on: squeegee on glass, the professional finish. | 1400×1120 |
-| `isaac.jpg` | About page (portrait) | A friendly photo of Isaac — smiling, approachable. | 1200×1500 |
+## The list
 
-Tips (a phone is fine):
-- Shoot in daylight, wipe the lens, hold steady.
-- Landscape (sideways) for everything except `isaac.jpg` (portrait).
-- Real job photos beat stock every time — and they double as great Google
-  Business Profile photos.
-- Free, no-attribution stock if you need it: Pexels, Unsplash, Pixabay.
+| Save it as | What it's for | Free photo to use |
+|---|---|---|
+| `hero.jpg` ✅ | Home hero | done (your upload) |
+| `method.jpg` | Services — "How I clean" | https://www.pexels.com/photo/man-in-blue-crew-neck-shirt-634007/ |
+| `why-clean.jpg` | Home — "Why people call me back" | https://www.pexels.com/photo/room-interior-illuminated-by-sunlight-coming-through-window-10488436/ |
+| `residential.jpg` | Home-windows page | https://www.pexels.com/photo/modern-bright-house-interior-with-furniture-6238679/ |
+| `service-area.jpg` | Home — "All over Regina" | https://www.pexels.com/photo/stylish-living-room-in-light-apartment-5998120/ |
+| `isaac.jpg` | About — Isaac's portrait | **A real photo of Isaac** — don't use stock here (portrait, min 1200×1500) |
+
+Landscape JPGs for everything except `isaac.jpg` (portrait). Real job photos beat
+stock and double as great Google Business Profile photos — swap them in whenever
+Isaac has some.
