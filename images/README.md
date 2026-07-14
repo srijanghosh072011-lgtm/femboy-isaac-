@@ -18,13 +18,16 @@ lands in this folder — then it appears automatically.
 
 ## The list
 
+All exterior shots — no interiors, so the site reads as "outside your house,"
+not "inside a living room."
+
 | Save it as | What it's for | Free photo to use |
 |---|---|---|
 | `hero.jpg` ✅ | Home hero | done (your upload) |
-| `method.jpg` | Services — "How I clean" | https://www.pexels.com/photo/man-in-blue-crew-neck-shirt-634007/ |
-| `why-clean.jpg` | Home — "Why people call me back" | https://www.pexels.com/photo/room-interior-illuminated-by-sunlight-coming-through-window-10488436/ |
-| `residential.jpg` | Home-windows page | https://www.pexels.com/photo/modern-bright-house-interior-with-furniture-6238679/ |
-| `service-area.jpg` | Home — "All over Regina" | https://www.pexels.com/photo/stylish-living-room-in-light-apartment-5998120/ |
+| `method.jpg` | Services — "How I clean" | https://www.pexels.com/photo/close-up-of-window-glass-5629428/ (clean glass, blue sky) |
+| `why-clean.jpg` | Home — "Why people call me back" | https://www.pexels.com/photo/house-exterior-during-daytime-6422939/ |
+| `residential.jpg` | Home-windows page | https://www.pexels.com/photo/facade-of-suburban-house-5517853/ |
+| `service-area.jpg` | Home — "All over Regina" | https://www.pexels.com/photo/a-front-yard-of-a-house-8894802/ |
 | `isaac.jpg` | About — Isaac's portrait | **A real photo of Isaac** — don't use stock here (portrait, min 1200×1500) |
 
 Landscape JPGs for everything except `isaac.jpg` (portrait). Real job photos beat
