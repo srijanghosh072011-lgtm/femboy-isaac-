@@ -5,9 +5,12 @@ cleaning business in **Regina, Saskatchewan**. Built as plain HTML, CSS and
 JavaScript — **no build step, no framework, no dependencies**. Just upload the
 folder and it works.
 
-> **Real business:** Viewshine Window Cleaning · Regina, SK · **(306) 552-7242** —
-> which already has a **Google Business Profile** (big for local SEO). Still
-> placeholders: the domain, email and business hours (see below).
+> **Real business:** Viewshine Window Cleaning · Regina, SK · **(306) 552-7242** ·
+> isaaclarson_orten@icloud.com · **9am–8pm daily** — which already has a
+> **Google Business Profile** (big for local SEO). Isaac is not currently
+> insured (new/side-hustle stage), so the site makes **no insurance claims**
+> anywhere — don't reintroduce "insured"/"WCB" wording until that's real.
+> Still placeholder: the domain (see below).
 
 ---
 
@@ -65,25 +68,28 @@ homepage). That's what GitHub Pages and other hosts expect.
 Everything below is a stand-in. Do a global find-and-replace across all `.html`
 files:
 
-Business name, phone and email are now the **real** ones (Viewshine Window
-Cleaning / (306) 552-7242 / isaaclarson_orten@icloud.com). Still placeholders
-to replace:
+Business name, phone, email and hours are now the **real** ones (Viewshine
+Window Cleaning / (306) 552-7242 / isaaclarson_orten@icloud.com / 9am–8pm
+daily). Still placeholder:
 
 | Find | Replace with |
 |---|---|
 | `viewshinewindows.ca` | Real domain, once registered (in canonical/OG/schema/sitemap/robots) |
 | `REPLACE_WITH_FORM_ENDPOINT` | Form backend URL (see below) |
-| "By appointment" | Real business hours, once confirmed (they should match the Google Business Profile) |
 
 Also:
-- **About page** (`about.html`): replace the "IO" avatar block with a real photo
-  of Isaac and rewrite the bio in his own words.
+- **`images/isaac.jpg`**: the only photo slot still empty — needs a real photo
+  of Isaac (not stock). See `images/README.md`.
+- **About page bio** (`about.html`): still a friendly draft — rewrite in
+  Isaac's own words once he gives you his real story.
 - **Reviews** (`index.html`): swap the sample testimonials for Isaac's real Google
-  reviews. (Only mark up reviews in schema that are visible on the page.)
-- **Prices**: confirm the real numbers ($149 / $249 / $349 / $129 are samples).
-- **Photos**: the sky/cream gradient panels are intentional placeholders — drop in
-  real before/after job photos where you see `.media-frame` blocks.
-- **Business hours & service areas**: confirm they're correct everywhere.
+  reviews once he has some. (Only mark up reviews in schema that are visible
+  on the page.)
+- **Prices**: confirm the real numbers ($149 / $249 are samples) once Isaac's
+  decided his rates.
+- **No insurance claims anywhere, on purpose**: Isaac isn't currently insured
+  (new business). Don't add "insured"/"WCB" language back until that's true —
+  it's a real liability if the site claims coverage that doesn't exist.
 - **Social links**: the footer icons point to `#` — set the real Facebook /
   Instagram / Google Business Profile URLs.
 
@@ -109,15 +115,23 @@ build or maintain.
 
 **Option A — Google Calendar (free, uses Isaac's Gmail):**
 1. Open Google Calendar → **Create → Appointment schedule**.
-2. Name it (e.g. "Window cleaning"), set his availability and slot length.
-3. Click **Share → embed**, copy the `<iframe>` code.
-4. In `booking.html`, find the `BOOKING WIDGET GOES HERE` comment, paste the
+2. Name it (e.g. "Window cleaning"), set availability to **9:00am–8:00pm, every day**.
+3. **Cap it at 2–3 jobs a day** (he's solo — don't let it overbook him): set the
+   slot **duration to ~3–3.5 hours** per booking. An 11-hour window (9–8) at
+   that length naturally offers about 3 slots/day. Shorten the window or
+   lengthen the slot if you want to guarantee exactly 2.
+4. Click **Share → embed**, copy the `<iframe>` code.
+5. In `booking.html`, find the `BOOKING WIDGET GOES HERE` comment, paste the
    iframe (add `class="booking-embed"`), and delete the `.booking-ph` block.
 
 **Option B — Calendly (free tier, syncs to Google Calendar):**
-1. Sign up at calendly.com, create an event type (e.g. "Window cleaning").
+1. Sign up at calendly.com, create an event type (e.g. "Window cleaning"),
+   9am–8pm daily availability.
 2. Connect his Google Calendar so booked times block out automatically.
-3. Copy the event link, and in `booking.html` use:
+3. **Cap daily bookings**: Calendly's paid tiers have a direct "max bookings
+   per day" limit; on the free tier, get the same effect by setting the event
+   duration to ~3–3.5 hours (same math as above).
+4. Copy the event link, and in `booking.html` use:
    `<iframe class="booking-embed" src="https://calendly.com/your-name/window-cleaning" title="Book a window cleaning"></iframe>`
 
 Until that's connected, the booking page shows a tidy "call or text to book"
@@ -134,15 +148,16 @@ Send Isaac this list. Grouped by where it's used on the site.
 - [x] **Business name** — Viewshine Window Cleaning ✓
 - [x] **Phone** — (306) 552-7242 ✓ (confirm texting is OK)
 - [x] **Email** — isaaclarson_orten@icloud.com ✓ (double-check the "orten" spelling is correct)
+- [x] **Hours** — 9am–8pm daily ✓ (site + Google Business Profile should match this)
+- [x] **Booking cap** — 2–3 homes/day max ✓ (reflected in the site copy; set it up for real when connecting the booking calendar — see "Set up online booking" above)
 - [ ] **Domain** he wants (e.g. viewshinewindows.ca) + register it
-- [ ] Exact **service hours** — site says "by appointment" for now; set real hours to match the Google Business Profile
 - [ ] Is he a registered business? Legal entity name for the footer/policies
-- [ ] **Insurance / WCB** — confirm coverage so we can say "insured" truthfully
+- [ ] **Insurance** — not currently insured (confirmed). Revisit the site copy if/when he gets coverage — that's the only time "insured" should come back.
 
 ### Google Business Profile (already exists — big win)
 - [ ] **Claim/verify** it if he hasn't (the "Is this your business?" link)
 - [ ] Add the **website URL** once it's live
-- [ ] Add **hours** and a few **photos**
+- [ ] Set **hours to 9am–8pm daily** to match the site, and add a few **photos**
 - [ ] Ask happy customers for the **first reviews** (currently zero)
 
 ### Services & pricing
