@@ -65,12 +65,12 @@ homepage). That's what GitHub Pages and other hosts expect.
 Everything below is a stand-in. Do a global find-and-replace across all `.html`
 files:
 
-Business name and phone are now the **real** ones (Viewshine Window Cleaning /
-(306) 552-7242). Still placeholders to replace:
+Business name, phone and email are now the **real** ones (Viewshine Window
+Cleaning / (306) 552-7242 / isaaclarson_orten@icloud.com). Still placeholders
+to replace:
 
 | Find | Replace with |
 |---|---|
-| `hello@viewshinewindows.ca` | Real email address |
 | `viewshinewindows.ca` | Real domain, once registered (in canonical/OG/schema/sitemap/robots) |
 | `REPLACE_WITH_FORM_ENDPOINT` | Form backend URL (see below) |
 | "By appointment" | Real business hours, once confirmed (they should match the Google Business Profile) |
@@ -133,7 +133,7 @@ Send Isaac this list. Grouped by where it's used on the site.
 ### Business basics
 - [x] **Business name** — Viewshine Window Cleaning ✓
 - [x] **Phone** — (306) 552-7242 ✓ (confirm texting is OK)
-- [ ] **Email** address
+- [x] **Email** — isaaclarson_orten@icloud.com ✓ (double-check the "orten" spelling is correct)
 - [ ] **Domain** he wants (e.g. viewshinewindows.ca) + register it
 - [ ] Exact **service hours** — site says "by appointment" for now; set real hours to match the Google Business Profile
 - [ ] Is he a registered business? Legal entity name for the footer/policies
