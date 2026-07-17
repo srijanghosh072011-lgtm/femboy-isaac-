@@ -95,18 +95,28 @@ Also:
 - **Social links**: the footer icons point to `#` — set the real Facebook /
   Instagram / Google Business Profile URLs.
 
-## Wiring up the quote form
+## Quote form — ✅ wired to Web3Forms
 
-The form is static, so it needs a form backend to actually email Isaac. Easiest
-free options — sign up, get an endpoint URL, paste it into every
-`action="REPLACE_WITH_FORM_ENDPOINT"`:
+Both quote forms (`index.html` and `contact.html`) POST to
+`https://api.web3forms.com/submit` with an `access_key` hidden field, sent via
+JavaScript `fetch()` (see `main.js`) so submitters see an inline "thanks, I've
+got your details" message instead of being redirected off-site. Client-side
+validation and the honeypot spam trap both still run first.
 
-- **Formspree** (formspree.io) — paste your form URL.
-- **Web3Forms** (web3forms.com) — add your access key.
-- **Netlify Forms** — if hosting on Netlify, add `netlify` to the `<form>` tag.
+**Before trusting it's live, test it for real:**
+1. Fill out the form on the actual site (once deployed) and submit it.
+2. Confirm the submission actually lands as an email — check whichever inbox
+   was used to create the Web3Forms access key.
+3. Web3Forms ties delivery to the email tied to the key. If a "workspace" /
+   team invite was sent to a second email (e.g. Isaac's) and it's still
+   unverified, submissions may land in the account owner's inbox instead of
+   his until that invite is accepted — the fastest way to know for sure is
+   this live test, not guessing from the dashboard.
 
-The form already includes client-side validation and a hidden honeypot field for
-basic spam protection. For more, add Cloudflare Turnstile or reCAPTCHA.
+If it ever needs to move to a different backend (Formspree, Netlify Forms,
+etc.), swap the `action=` URL and adjust the hidden fields (each service
+wants a slightly different field name for its key/ID) — the honeypot and
+`main.js` validation logic stay the same either way.
 
 ## Set up online booking (`booking.html`)
 

@@ -385,8 +385,10 @@
       </div>
 
       <div class="split__media reveal" data-d="2">
-        <!-- REPLACE action= with a real form backend (Formspree / Netlify / Web3Forms). See README. -->
-        <form class="form-card" data-quote action="REPLACE_WITH_FORM_ENDPOINT" method="POST" novalidate>
+        <form class="form-card" data-quote action="https://api.web3forms.com/submit" method="POST" novalidate>
+          <input type="hidden" name="access_key" value="3648a8a0-0fab-4bf3-9f7b-7d091f6548ef">
+          <input type="hidden" name="subject" value="New quote request — Viewshine site">
+          <input type="hidden" name="from_name" value="Viewshine website">
           <div class="field--row">
             <div class="field"><label for="name">Your name</label><input id="name" name="name" type="text" placeholder="Jane Doe" required></div>
             <div class="field"><label for="phone">Phone</label><input id="phone" name="phone" type="tel" placeholder="(306) 552-7242"></div>

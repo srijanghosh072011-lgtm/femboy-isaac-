@@ -53,22 +53,23 @@
     reveals.forEach(function (el) { el.classList.add("in"); });
   }
 
-  /* Quote / contact form — client-side validation + honeypot spam trap.
-     NOTE: a static site cannot email on its own. Point action= at a form
-     backend (Formspree / Netlify Forms / Web3Forms) — see README. */
+  /* Quote / contact form — client-side validation + honeypot spam trap,
+     submitted via fetch to Web3Forms so we can show our own inline message
+     instead of redirecting off-site. */
   document.querySelectorAll("form[data-quote]").forEach(function (form) {
     var status = form.querySelector(".form-status");
     form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
       // Honeypot: real users never fill this hidden field.
       var hp = form.querySelector('input[name="company_website"]');
-      if (hp && hp.value.trim() !== "") { e.preventDefault(); return; }
+      if (hp && hp.value.trim() !== "") { return; }
 
       var name = form.querySelector('[name="name"]');
       var email = form.querySelector('[name="email"]');
       var emailOk = email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
 
       if (!name || !name.value.trim() || !emailOk) {
-        e.preventDefault();
         if (status) {
           status.className = "form-status err";
           status.textContent = "Please add your name and a valid email so we can send your quote.";
@@ -76,18 +77,43 @@
         return;
       }
 
-      // If no real backend is wired yet, don't fake a network success.
       var action = (form.getAttribute("action") || "").trim();
       if (!action || action.indexOf("REPLACE") !== -1 || action === "#") {
-        e.preventDefault();
         if (status) {
           status.className = "form-status ok";
           status.textContent = "Thanks " + name.value.trim().split(" ")[0] +
             "! This demo form isn't connected yet — call or text us and we'll get you a same-day quote.";
         }
         form.reset();
+        return;
       }
-      // Otherwise the browser submits to the configured backend normally.
+
+      var submitBtn = form.querySelector('button[type="submit"]');
+      if (submitBtn) submitBtn.disabled = true;
+
+      fetch(action, { method: "POST", body: new FormData(form), headers: { Accept: "application/json" } })
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+          if (!status) return;
+          if (data && data.success) {
+            status.className = "form-status ok";
+            status.textContent = "Thanks " + name.value.trim().split(" ")[0] +
+              "! I've got your details and I'll text or email you back shortly.";
+            form.reset();
+          } else {
+            status.className = "form-status err";
+            status.textContent = "Something went wrong sending that — call or text (306) 552-7242 and I'll get you sorted.";
+          }
+        })
+        .catch(function () {
+          if (status) {
+            status.className = "form-status err";
+            status.textContent = "Something went wrong sending that — call or text (306) 552-7242 and I'll get you sorted.";
+          }
+        })
+        .finally(function () {
+          if (submitBtn) submitBtn.disabled = false;
+        });
     });
   });
 

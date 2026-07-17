@@ -148,6 +148,7 @@ p  { color: var(--ink-soft); }
 .btn:hover { box-shadow: var(--sh-3); }
 .btn:hover .ico { transform: translate(3px, -1px); background: rgba(255,255,255,.28); }
 .btn:active { transform: scale(.975); }
+.btn:disabled { opacity: .6; cursor: not-allowed; box-shadow: none; transform: none; }
 
 .btn--coral { --bg: var(--coral); box-shadow: var(--sh-coral); }
 .btn--coral:hover { --bg: var(--coral-strong); }
