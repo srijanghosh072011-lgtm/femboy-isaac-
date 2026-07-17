@@ -6,7 +6,9 @@ JavaScript — **no build step, no framework, no dependencies**. Just upload the
 folder and it works.
 
 > **Real business:** Viewshine Window Cleaning · Regina, SK · **(306) 552-7242** ·
-> isaaclarson_orten@icloud.com · **9am–8pm daily** — which already has a
+> isaaclarson_orten@icloud.com · **9am–8pm, days vary** (it's fully Isaac's
+> call which days he works and which clients he takes — the site never
+> promises "open every day" or "always accepts") — which already has a
 > **Google Business Profile** (big for local SEO). Isaac is not currently
 > insured (new/side-hustle stage), so the site makes **no insurance claims**
 > anywhere — don't reintroduce "insured"/"WCB" wording until that's real.
@@ -113,9 +115,19 @@ then paste one `<iframe>` line into `booking.html` (there's a labelled comment
 showing exactly where). The scheduler runs entirely on their side; nothing to
 build or maintain.
 
+**Isaac has full control over his own schedule — that's a feature, not a gap.**
+He doesn't have to work every day and doesn't have to accept every client.
+Both tools below are built for exactly that: he opens/closes availability
+whenever he wants (block off a day, take a week off, whatever), and he can
+decline or cancel any specific booking. The site's copy says "9am–8pm, days
+vary" on purpose — never promise "open every day" or "always accepts," since
+neither is true and it's his call, job by job.
+
 **Option A — Google Calendar (free, uses Isaac's Gmail):**
 1. Open Google Calendar → **Create → Appointment schedule**.
-2. Name it (e.g. "Window cleaning"), set availability to **9:00am–8:00pm, every day**.
+2. Name it (e.g. "Window cleaning"), set a general window of **9:00am–8:00pm**
+   for the days he expects to usually work — he can always block off or add
+   days later, day by day, from the calendar directly.
 3. **Cap it at 2–3 jobs a day** (he's solo — don't let it overbook him): set the
    slot **duration to ~3–3.5 hours** per booking. An 11-hour window (9–8) at
    that length naturally offers about 3 slots/day. Shorten the window or
@@ -125,8 +137,9 @@ build or maintain.
    iframe (add `class="booking-embed"`), and delete the `.booking-ph` block.
 
 **Option B — Calendly (free tier, syncs to Google Calendar):**
-1. Sign up at calendly.com, create an event type (e.g. "Window cleaning"),
-   9am–8pm daily availability.
+1. Sign up at calendly.com, create an event type (e.g. "Window cleaning") with
+   a 9am–8pm window for his typical days — adjustable any time from Calendly's
+   availability settings.
 2. Connect his Google Calendar so booked times block out automatically.
 3. **Cap daily bookings**: Calendly's paid tiers have a direct "max bookings
    per day" limit; on the free tier, get the same effect by setting the event
@@ -148,7 +161,7 @@ Send Isaac this list. Grouped by where it's used on the site.
 - [x] **Business name** — Viewshine Window Cleaning ✓
 - [x] **Phone** — (306) 552-7242 ✓ (confirm texting is OK)
 - [x] **Email** — isaaclarson_orten@icloud.com ✓ (double-check the "orten" spelling is correct)
-- [x] **Hours** — 9am–8pm daily ✓ (site + Google Business Profile should match this)
+- [x] **Hours** — 9am–8pm window, but days are entirely his call ✓ (Google Business Profile still needs specific days set, since it can't say "varies" — pick whatever he actually plans to work most weeks, and adjust anytime)
 - [x] **Booking cap** — 2–3 homes/day max ✓ (reflected in the site copy; set it up for real when connecting the booking calendar — see "Set up online booking" above)
 - [ ] **Domain** he wants (e.g. viewshinewindows.ca) + register it
 - [ ] Is he a registered business? Legal entity name for the footer/policies
@@ -157,7 +170,7 @@ Send Isaac this list. Grouped by where it's used on the site.
 ### Google Business Profile (already exists — big win)
 - [ ] **Claim/verify** it if he hasn't (the "Is this your business?" link)
 - [ ] Add the **website URL** once it's live
-- [ ] Set **hours to 9am–8pm daily** to match the site, and add a few **photos**
+- [ ] Set **hours to a 9am–8pm window** (pick the days he usually plans to work), and add a few **photos**
 - [ ] Ask happy customers for the **first reviews** (currently zero)
 
 ### Services & pricing
