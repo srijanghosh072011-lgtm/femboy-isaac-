@@ -222,16 +222,30 @@ volume; they change.
 | ffmpeg motion, cards, concat, loop, captions, encode | **Verified** — output confirmed 1080x1920 H.264 + AAC |
 | Gate / ledger / no-fallback behaviour | **Verified** — tested directly, including across two runs |
 | OpenAI Images, Chat, Vision adapters | **Written, not executed** — no API key was available here |
-| Pexels / Pixabay adapters | **Written, not executed** — those hosts were unreachable from the build environment |
+| Pexels / Pixabay response parsing | **Verified against the documented shapes** — fixture tests in `tests/test_source_parsing.py` |
+| Pexels / Pixabay live calls | **Never executed** — both hosts are blocked by the build environment's egress policy |
 
 The network adapters follow each API's documented request shape but have never
 made a real call, so expect one round of fixes on first contact. Run
 `python3 -m vidauto check --probe-image` as your first paid action: it
 generates exactly one image and reports what happened.
 
-For `rank`, the cheapest first real test is `CLIP_SOURCES=pexels
-VISION_PROVIDER=mock` — it exercises live search and download while the gate
-stays free, isolating the source adapters from the vision one.
+For `rank`, start with `python3 -m vidauto check`. It runs a real search
+against every configured clip source and reports what came back, which costs
+nothing — stock search is free. Then:
+
+```bash
+CLIP_SOURCES=pexels VISION_PROVIDER=mock python3 -m vidauto rank
+```
+
+That exercises live search and download while the gate stays free, isolating
+the source adapters from the vision one. Flip `VISION_PROVIDER` once you know
+the source layer works.
+
+The response *parsing* is pinned by fixture tests built from each API's
+published documentation, so the silent failure — every field reading None and
+every candidate quietly discarded — is covered. What those tests cannot catch
+is an auth or endpoint mistake; only a live call does that.
 
 ---
 

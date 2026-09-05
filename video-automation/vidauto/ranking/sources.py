@@ -132,6 +132,25 @@ class MockSource(Source):
         return dest
 
 
+def _title_from(video: dict, query: str) -> str:
+    """Best available human label for a Pexels video.
+
+    The Video resource carries `tags` (a list); `alt` belongs to the Photo
+    resource. Both are checked because the API has carried each at different
+    times, and the query is the last resort so a candidate is never nameless
+    in the credits file.
+    """
+    alt = video.get("alt")
+    if isinstance(alt, str) and alt.strip():
+        return alt.strip()
+    tags = video.get("tags")
+    if isinstance(tags, list) and tags:
+        return ", ".join(str(t) for t in tags[:5])
+    if isinstance(tags, str) and tags.strip():
+        return tags.strip()
+    return query
+
+
 # --------------------------------------------------------------------------
 # pexels
 # --------------------------------------------------------------------------
@@ -143,17 +162,28 @@ class PexelsSource(Source):
     name = "pexels"
     ENDPOINT = "https://api.pexels.com/videos/search"
 
-    def __init__(self, api_key: str):
+    def __init__(self, api_key: str, portrait_only: bool = False):
         if not api_key:
             raise SourceError("PEXELS_API_KEY is not set")
         self.api_key = api_key
+        self.portrait_only = portrait_only
 
     def search(self, query: str, limit: int) -> list[Candidate]:
+        params: dict[str, object] = {"query": query, "per_page": min(limit, 80)}
+        # Deliberately NOT filtering to portrait by default. Most stock footage
+        # is landscape, so asking the API for portrait only discards the large
+        # majority of the library -- and in a pipeline where finding any
+        # correct clip is the hard part, recall matters far more than framing.
+        # build.py composites landscape over a blurred fill perfectly well, and
+        # select._prior already prefers vertical when both are available. This
+        # is opt-in for anyone who would rather have gaps than letterboxing.
+        if self.portrait_only:
+            params["orientation"] = "portrait"
         try:
             resp = requests.get(
                 self.ENDPOINT,
                 headers={"Authorization": self.api_key},
-                params={"query": query, "per_page": min(limit, 80), "orientation": "portrait"},
+                params=params,
                 timeout=TIMEOUT,
             )
         except requests.RequestException as exc:
@@ -180,7 +210,7 @@ class PexelsSource(Source):
                 Candidate(
                     source=self.name,
                     source_id=str(video.get("id")),
-                    title=(video.get("alt") or query),
+                    title=_title_from(video, query),
                     page_url=video.get("url", ""),
                     download_url=best.get("link", ""),
                     width=int(best.get("width") or 0),
@@ -266,7 +296,13 @@ def build_sources(names: list[str]) -> list[Source]:
         if key == "mock":
             sources.append(MockSource())
         elif key == "pexels":
-            sources.append(PexelsSource(os.environ.get("PEXELS_API_KEY", "")))
+            sources.append(
+                PexelsSource(
+                    os.environ.get("PEXELS_API_KEY", ""),
+                    portrait_only=os.environ.get("PEXELS_PORTRAIT_ONLY", "").lower()
+                    in {"1", "true", "yes", "on"},
+                )
+            )
         elif key == "pixabay":
             sources.append(PixabaySource(os.environ.get("PIXABAY_API_KEY", "")))
         else:

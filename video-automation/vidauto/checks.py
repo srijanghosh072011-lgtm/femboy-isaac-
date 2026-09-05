@@ -153,9 +153,66 @@ def probe_image(cfg: Config) -> Check:
         return Check(OK, "image probe", f"generated {dest.stat().st_size:,} bytes with {cfg.image_model}")
 
 
+def _check_clip_sources(cfg: Config) -> list[Check]:
+    """Verify each configured clip source can actually be searched.
+
+    A real search for a common term, not just a key-presence check: the failure
+    people actually hit is a key that exists but is wrong, or an endpoint that
+    answers but returns nothing usable. Stock search is free, so this costs
+    nothing to run.
+    """
+    from .ranking.sources import SourceError, build_sources
+
+    out: list[Check] = []
+    for name in cfg.clip_sources:
+        if name == "mock":
+            out.append(Check(OK, "clip source: mock", "procedural placeholder, no network, no cost"))
+            continue
+        try:
+            source = build_sources([name])[0]
+        except SourceError as exc:
+            out.append(Check(FAIL, f"clip source: {name}", str(exc)))
+            continue
+        try:
+            results = source.search("people working", 5)
+        except SourceError as exc:
+            out.append(Check(FAIL, f"clip source: {name}", str(exc)))
+            continue
+        if not results:
+            out.append(
+                Check(WARN, f"clip source: {name}", "reachable, but a common query returned nothing")
+            )
+            continue
+        with_preview = sum(1 for c in results if c.preview_url)
+        out.append(
+            Check(
+                OK,
+                f"clip source: {name}",
+                f"{len(results)} results, {with_preview} with a preview image "
+                f"(previews keep the vision gate cheap)",
+            )
+        )
+    return out
+
+
+def _check_vision(cfg: Config) -> Check:
+    if cfg.vision_provider == "mock":
+        return Check(
+            OK,
+            "relevance gate",
+            "mock -- simulated from the mock source's ground truth, no cost. "
+            "Set VISION_PROVIDER=openai or anthropic for real clip verification.",
+        )
+    if cfg.vision_provider == "anthropic" and not cfg.anthropic_api_key:
+        return Check(FAIL, "relevance gate", "VISION_PROVIDER=anthropic but ANTHROPIC_API_KEY is unset")
+    return Check(OK, "relevance gate", f"{cfg.vision_provider}, model {cfg.vision_model}")
+
+
 def run_checks(cfg: Config, with_probe: bool = False) -> tuple[list[Check], bool]:
     checks = [_check_ffmpeg(), _check_font(), _check_key(cfg), _check_text_model(cfg)]
     checks += _check_api(cfg)
+    checks.append(_check_vision(cfg))
+    checks += _check_clip_sources(cfg)
     if with_probe:
         checks.append(probe_image(cfg))
     blocking = any(c.status == FAIL for c in checks[:2])
