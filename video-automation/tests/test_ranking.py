@@ -256,6 +256,19 @@ def test_mock_vision_scores_a_decoy_low():
     assert score < 7
 
 
+def test_mock_gate_passes_a_real_clip_but_marks_it_unverified():
+    """A real source under the mock gate must still resolve.
+
+    Scoring an unjudgeable clip mid-range would reject every real candidate and
+    produce an empty video -- which is what `CLIP_SOURCES=pexels
+    VISION_PROVIDER=mock` used to do.
+    """
+    real = make_candidate(true_subject=None)
+    score, note = verify._mock_vision(real, make_item())
+    assert score >= Config().verify_threshold
+    assert verify.UNVERIFIED_NOTE in note
+
+
 def test_parse_score_reads_clean_json():
     assert verify._parse_score('{"score": 8, "shows": "a roof"}')[0] == 8.0
 

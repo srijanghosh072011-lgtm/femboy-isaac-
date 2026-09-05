@@ -27,6 +27,9 @@ from .models import Candidate, RankItem
 
 TIMEOUT = 90
 
+# Marker for a clip that reached the video without being judged.
+UNVERIFIED_NOTE = "UNVERIFIED: mock gate passes real clips through unjudged"
+
 PROMPT = """\
 You are checking whether a video frame is usable as illustration for one entry \
 in a ranking video.
@@ -156,7 +159,12 @@ def _mock_vision(candidate: Candidate, item: RankItem) -> tuple[float, str]:
     """
     truth = (candidate.true_subject or "").strip().lower()
     if not truth:
-        return 5.0, "unknown (no ground truth)"
+        # A real source under the mock gate: there is no ground truth to
+        # compare against and no model to ask. Scoring this in the middle
+        # would reject every real clip and produce an empty video, so it
+        # passes -- but the note travels with the clip and POSTING.md warns,
+        # because nothing here has actually checked what the clip shows.
+        return 10.0, UNVERIFIED_NOTE
 
     terms = {t.strip().lower() for t in item.search_terms}
     if truth in terms or truth == item.name.strip().lower():

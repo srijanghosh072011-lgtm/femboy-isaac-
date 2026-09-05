@@ -136,6 +136,7 @@ def select_for_item(
 
         report.checked += 1
         candidate.relevance = score
+        candidate.verify_note = shows
 
         if score >= cfg.verify_threshold:
             item.chosen = candidate

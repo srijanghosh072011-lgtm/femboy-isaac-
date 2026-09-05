@@ -31,6 +31,9 @@ class Candidate:
     # a video download -- and most candidates are rejected.
     preview_url: str = ""
     true_subject: str | None = None
+    # What the gate said about this clip. Carries the UNVERIFIED marker
+    # when the mock gate passed a real clip through without judging it.
+    verify_note: str = ""
 
     # Filled in by the pipeline as the candidate moves through it.
     relevance: float | None = None

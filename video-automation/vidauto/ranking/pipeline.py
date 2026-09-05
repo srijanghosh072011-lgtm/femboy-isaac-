@@ -160,6 +160,23 @@ def _write_posting(run_dir: Path, cfg: Config, ranking: RankList, resolved: list
 
     lines = [f"# Posting checklist -- {ranking.title}", ""]
 
+    from .verify import UNVERIFIED_NOTE
+
+    unverified = [i for i in resolved if UNVERIFIED_NOTE in (i.chosen.verify_note or "")]
+    if unverified:
+        lines += [
+            "## THESE CLIPS WERE NOT CHECKED",
+            "",
+            "VISION_PROVIDER=mock cannot judge a real clip, so these went into the",
+            "video without anything confirming they show what the entry says. Watch",
+            "the video before posting, or set VISION_PROVIDER=openai/anthropic and",
+            "re-run to have them actually verified.",
+            "",
+        ]
+        for item in unverified:
+            lines.append(f"- #{item.rank} {item.name} -- {item.chosen.title}")
+        lines.append("")
+
     if unresolved:
         lines += [
             "## Unresolved items (READ THIS FIRST)",
