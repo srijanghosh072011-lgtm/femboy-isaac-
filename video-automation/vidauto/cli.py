@@ -117,6 +117,70 @@ def cmd_topic(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_rank(args: argparse.Namespace) -> int:
+    from .ranking import pipeline as rank_pipeline
+
+    try:
+        cfg = load()
+    except ValueError as exc:
+        print(f"Configuration error: {exc}", file=sys.stderr)
+        return 2
+
+    if args.sources:
+        cfg.clip_sources = [s.strip() for s in args.sources.split(",") if s.strip()]
+    if args.items:
+        cfg.rank_items = args.items
+    if args.seconds:
+        cfg.seconds_per_item = args.seconds
+    if args.threshold is not None:
+        cfg.verify_threshold = args.threshold
+    try:
+        cfg.validate()
+    except ValueError as exc:
+        print(f"Configuration error: {exc}", file=sys.stderr)
+        return 2
+
+    failures = 0
+    for n in range(args.count):
+        try:
+            result = rank_pipeline.run_once(
+                cfg,
+                seed=args.seed if args.seed is None else args.seed + n,
+                keep_intermediates=args.keep_intermediates,
+            )
+        except Exception as exc:  # noqa: BLE001 - one bad run must not kill a batch
+            failures += 1
+            print(f"\n  run {n + 1}/{args.count} FAILED: {exc}", file=sys.stderr)
+            if args.traceback:
+                traceback.print_exc()
+            continue
+
+        print(f"\n  {result.ranking.title}")
+        print(f"  resolved  {result.resolved}/{result.requested} items")
+        for report in result.reports:
+            mark = "ok  " if report.item.chosen else "MISS"
+            detail = (
+                f"{report.searched} found, {report.checked} checked, "
+                f"{report.rejected_by_vision} rejected"
+            )
+            if report.item.chosen and report.item.chosen.relevance is not None:
+                detail += f", scored {report.item.chosen.relevance:.1f}"
+            print(f"    [{mark}] #{report.item.rank} {report.item.name}: {detail}")
+            if report.error:
+                print(f"           {report.error}")
+        if result.video:
+            print(f"  video     {result.video}  ({result.duration:.1f}s)")
+            print(f"  checklist {result.directory / 'POSTING.md'}")
+        else:
+            print("  no video produced -- nothing resolved", file=sys.stderr)
+            failures += 1
+
+    print()
+    if failures:
+        print(f"  {args.count - failures}/{args.count} runs succeeded.")
+    return 1 if failures else 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="vidauto",
@@ -141,6 +205,19 @@ def build_parser() -> argparse.ArgumentParser:
     p_run.add_argument("--keep-intermediates", action="store_true", help="keep per-segment files")
     p_run.add_argument("--traceback", action="store_true", help="print full tracebacks on failure")
     p_run.set_defaults(func=cmd_run)
+
+    p_rank = sub.add_parser("rank", help="produce a ranking / countdown video from sourced clips")
+    p_rank.add_argument("--count", type=int, default=1, help="how many videos to produce")
+    p_rank.add_argument("--sources", help="comma-separated clip sources (mock,pexels,pixabay)")
+    p_rank.add_argument("--items", type=int, help="how many entries in the countdown")
+    p_rank.add_argument("--seconds", type=float, help="seconds per entry")
+    p_rank.add_argument(
+        "--threshold", type=float, help="relevance gate, 0-10 (default 7)"
+    )
+    p_rank.add_argument("--seed", type=int, help="deterministic list choice")
+    p_rank.add_argument("--keep-intermediates", action="store_true")
+    p_rank.add_argument("--traceback", action="store_true")
+    p_rank.set_defaults(func=cmd_rank)
 
     p_topic = sub.add_parser("topic", help="print one topic as JSON without rendering")
     p_topic.add_argument("--seed", type=int)

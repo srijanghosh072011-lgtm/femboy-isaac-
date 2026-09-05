@@ -81,6 +81,41 @@ class Config:
     image_quality: str = field(default_factory=lambda: os.environ.get("IMAGE_QUALITY", "medium"))
     text_model: str = field(default_factory=lambda: os.environ.get("TEXT_MODEL", "gpt-5"))
 
+    # --- ranking pipeline -------------------------------------------------
+    # Where clips come from, tried in order and pooled: mock|pexels|pixabay.
+    clip_sources: list[str] = field(
+        default_factory=lambda: [
+            s.strip() for s in os.environ.get("CLIP_SOURCES", "mock").split(",") if s.strip()
+        ]
+    )
+    # The relevance gate. "mock" simulates a judgement from the mock source's
+    # ground truth; the others call a real vision model.
+    vision_provider: str = field(default_factory=lambda: os.environ.get("VISION_PROVIDER", "mock"))
+    vision_model: str = field(
+        default_factory=lambda: os.environ.get("VISION_MODEL", "gpt-5")
+    )
+    anthropic_api_key: str | None = field(
+        default_factory=lambda: os.environ.get("ANTHROPIC_API_KEY")
+    )
+    # 0-10. Below 7 a clip is "related but indirect", which is what slop looks
+    # like, so the default demands a clear depiction.
+    verify_threshold: float = field(
+        default_factory=lambda: float(os.environ.get("VERIFY_THRESHOLD", "7"))
+    )
+    # Cost ceiling per item: vision checks stop after this many, whether or not
+    # anything cleared the bar.
+    max_vision_checks: int = field(default_factory=lambda: _env_int("MAX_VISION_CHECKS", 8))
+    candidates_per_query: int = field(
+        default_factory=lambda: _env_int("CANDIDATES_PER_QUERY", 10)
+    )
+    rank_items: int = field(default_factory=lambda: _env_int("RANK_ITEMS", 5))
+    seconds_per_item: float = field(
+        default_factory=lambda: float(os.environ.get("SECONDS_PER_ITEM", "3.5"))
+    )
+    ledger_path: Path = field(
+        default_factory=lambda: Path(os.environ.get("LEDGER_PATH", "clip-ledger.json")).expanduser()
+    )
+
     # --- shape of the output --------------------------------------------
     segments: int = field(default_factory=lambda: _env_int("SEGMENTS", 4))
     seconds_per_segment: float = field(
@@ -115,7 +150,17 @@ class Config:
             raise ValueError(f"Unknown IMAGE_PROVIDER {self.image_provider!r} (mock|openai)")
         if self.text_provider not in {"mock", "openai"}:
             raise ValueError(f"Unknown TEXT_PROVIDER {self.text_provider!r} (mock|openai)")
-        needs_key = "openai" in {self.image_provider, self.text_provider}
+        if self.vision_provider not in {"mock", "openai", "anthropic"}:
+            raise ValueError(
+                f"Unknown VISION_PROVIDER {self.vision_provider!r} (mock|openai|anthropic)"
+            )
+        if not 0 <= self.verify_threshold <= 10:
+            raise ValueError("VERIFY_THRESHOLD must be between 0 and 10")
+        if self.max_vision_checks < 1:
+            raise ValueError("MAX_VISION_CHECKS must be at least 1")
+        if self.vision_provider == "anthropic" and not self.anthropic_api_key:
+            raise ValueError("VISION_PROVIDER=anthropic but ANTHROPIC_API_KEY is not set")
+        needs_key = "openai" in {self.image_provider, self.text_provider, self.vision_provider}
         if needs_key and not self.openai_api_key:
             raise ValueError(
                 "OPENAI_API_KEY is not set but a provider is set to 'openai'. "

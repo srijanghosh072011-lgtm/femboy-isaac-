@@ -1,21 +1,121 @@
 # vidauto
 
-A faceless vertical-video pipeline. Generates a still image per shot, animates
-each one with a slow camera move, assembles them into a loop-shaped 9:16 clip
-with burned-in captions, and writes the posting checklist beside it.
+Two faceless vertical-video pipelines that share an assembly engine.
 
 ```
 python3 -m pip install -r requirements.txt
 python3 -m vidauto check     # what can this machine and this key do?
-python3 -m vidauto run       # produces a finished MP4, no credentials needed
+
+python3 -m vidauto rank      # ranking / countdown video from sourced clips
+python3 -m vidauto run       # generated stills, animated with camera moves
 ```
 
-The second command works on a clean machine with an empty environment. It uses
-the mock providers, so it costs nothing and produces procedural placeholder
-imagery — but it exercises the entire real pipeline and hands you a valid
-1080x1920 H.264 file you can play.
+| | `rank` | `run` |
+|---|---|---|
+| Footage | Real licensed stock, found and verified | Generated stills, animated |
+| The hard part | **Finding a clip that actually shows the thing** | Prompting for photoreal output |
+| Cost driver | Vision checks (cents) | Image generation (~$0.12–0.25/video) |
+| Output | ~19s countdown, number cards burned in | ~17s loop-shaped wonder clip |
+
+Both commands work on a clean machine with an empty environment, using mock
+providers: no credentials, no cost, and a real playable 1080x1920 MP4 at the
+end. That is the point — the whole pipeline is exercisable before you decide
+which vendor to pay.
 
 ---
+
+# `rank` — ranking / countdown videos
+
+The editing here is a for-loop: number card, clip, cut, repeat. **Clip sourcing
+is the entire problem**, and it has a specific failure mode worth naming.
+
+## The specificity gap
+
+> Ranking videos are about specific things. Stock libraries are indexed by
+> generic concepts.
+
+Search any stock API for a list item and it returns *something*, ranked by
+keyword overlap and popularity rather than by whether the clip depicts the
+thing. Ask for "commercial fisherman" and you may get a seafood dinner. Take
+result #1 on faith across ten items and you have a finished video that is
+confidently wrong — which is exactly what automated ranking channels look like.
+
+**Search recall is not the problem. Verification is.**
+
+## How this pipeline handles it
+
+```
+topic ─► ranked list, each item with 3-4 search variants
+      ─► fan out: every source x every variant  ─► candidate pool
+      ─► free filters first: resolution, duration, already-used
+      ─► VISION GATE: hosted preview ─► "does this show <item>? 0-10"
+      ─► first candidate over threshold wins  (early stop)
+      ─► no winner? leave the item UNRESOLVED. never fall back.
+      ─► ledger the clip so no future video reuses it
+```
+
+Four decisions carry most of the weight:
+
+- **The search terms describe visible action, not the noun.** "logger" returns
+  posed portraits; "felling a tree with a chainsaw" returns the shot. Each item
+  carries several phrasings and the pipeline tries all of them.
+- **The gate checks the source's hosted preview image**, not a downloaded
+  video, so rejecting a candidate costs one small image — and most candidates
+  are rejected. Only the winner is downloaded.
+- **Free filters run before any model is consulted**, and checks stop as soon
+  as something clears the bar. `MAX_VISION_CHECKS` caps the spend per item.
+- **There is no "best of a bad bunch" fallback.** An item with no acceptable
+  clip is left out and flagged loudly in `POSTING.md`. Nine right items beat
+  ten with one obvious lie in it. This is tested directly.
+
+## What you get
+
+```
+runs/<timestamp>-rank-<slug>/
+  final.mp4       1080x1920, number/name/stat cards burned in
+  CREDITS.md      per-clip licensing, attribution-required split out first
+  POSTING.md      unresolved items, licensing, disclosure, checklist
+  manifest.json   full sourcing trace: found / checked / rejected, per item
+clip-ledger.json  every clip ever used  <- back this up
+```
+
+The **sourcing trace** in `manifest.json` is what you read when a video comes
+out with gaps: how many candidates each item found, how many the gate checked,
+how many it rejected and why.
+
+## Licensing
+
+Attribution obligations are carried per clip, not assumed per source, because
+they genuinely differ — Pexels and Pixabay need none, Wikimedia Commons is
+mostly CC-BY/CC-BY-SA and does. `CREDITS.md` puts anything requiring
+attribution in its own section at the top; paste it into the description.
+
+Two pieces of widely-repeated advice this repo deliberately does **not**
+follow, because both are wrong:
+
+- *"Clips under ~10 seconds are safe."* There is no safe-length rule in
+  copyright. Content ID matches fingerprints at any usable length.
+- *"Diversify sources so detection doesn't catch the copyrighted ones."* That
+  is evading detection of infringement, not licensing. It also fails — claims
+  land retroactively.
+
+The workable answer is upstream: rank things whose footage is genuinely
+licensable. Everyday life, jobs, food, nature, science and engineering are well
+covered by free stock. Movies, games, sport and TV are not, at any scale.
+
+## Adding a source
+
+Subclass `Source` in `ranking/sources.py` with `search()` and `download()`,
+then add it to `build_sources`. Wikimedia Commons, NASA, Openverse, Pond5 and
+Envato all fit this shape. Set `attribution_required` honestly — the credits
+file is generated from it.
+
+---
+
+# `run` — generated stills, animated
+
+Where `rank` finds real footage, `run` makes its own: one generated still per
+shot, each animated with a slow camera move, assembled into a loop-shaped clip.
 
 ## Why this generates stills instead of video
 
@@ -118,13 +218,20 @@ volume; they change.
 
 | Path | Status |
 |---|---|
-| Whole pipeline on mock providers | **Verified** — 24 tests pass, including two end-to-end ffmpeg runs |
-| ffmpeg motion, concat, loop, captions, encode | **Verified** — output confirmed 1080x1920 H.264 + AAC, 17.2s |
-| OpenAI Images / Chat adapters | **Written, not executed** — no API key was available here |
+| Both pipelines on mock providers | **Verified** — 58 tests pass, including five end-to-end ffmpeg runs |
+| ffmpeg motion, cards, concat, loop, captions, encode | **Verified** — output confirmed 1080x1920 H.264 + AAC |
+| Gate / ledger / no-fallback behaviour | **Verified** — tested directly, including across two runs |
+| OpenAI Images, Chat, Vision adapters | **Written, not executed** — no API key was available here |
+| Pexels / Pixabay adapters | **Written, not executed** — those hosts were unreachable from the build environment |
 
-The live adapters follow the documented request shapes but have never made a
-real call. Run `python3 -m vidauto check --probe-image` as your first paid
-action: it generates exactly one image and reports what happened.
+The network adapters follow each API's documented request shape but have never
+made a real call, so expect one round of fixes on first contact. Run
+`python3 -m vidauto check --probe-image` as your first paid action: it
+generates exactly one image and reports what happened.
+
+For `rank`, the cheapest first real test is `CLIP_SOURCES=pexels
+VISION_PROVIDER=mock` — it exercises live search and download while the gate
+stays free, isolating the source adapters from the vision one.
 
 ---
 
@@ -148,6 +255,17 @@ CLI flags override for one run.
 | `OUT_DIR` | `runs` | |
 | `FFMPEG_BIN` | — | Overrides discovery |
 | `CAPTION_FONT` | — | Path to a bold `.ttf` |
+
+Ranking-specific settings (`CLIP_SOURCES`, `VISION_PROVIDER`,
+`VERIFY_THRESHOLD`, `MAX_VISION_CHECKS`, `CANDIDATES_PER_QUERY`, `RANK_ITEMS`,
+`SECONDS_PER_ITEM`, `LEDGER_PATH`, `PEXELS_API_KEY`, `PIXABAY_API_KEY`) are
+documented in `.env.example`.
+
+```bash
+python3 -m vidauto rank --sources pexels,pixabay --items 10
+python3 -m vidauto rank --threshold 6      # looser gate, more fills, more risk
+python3 -m vidauto rank --keep-intermediates   # keep downloaded clips to inspect
+```
 
 ```bash
 python3 -m vidauto run --count 5              # batch; one failure will not stop the rest
@@ -197,10 +315,12 @@ pip-installed ffmpeg fully supported.
 ## Tests
 
 ```bash
-python3 -m pip install pytest
-python3 -m pytest -q          # 24 tests, ~35s
-python3 -m pytest -q -m "not slow"
+python3 -m pip install -r requirements-dev.txt
+python3 -m pytest -q                 # 58 tests, ~9 min
+python3 -m pytest -q -m "not slow"   # ~5s, skips the ffmpeg runs
 ```
 
-The two end-to-end tests run real ffmpeg. They are slow and they are the ones
-that matter: all three bugs above passed unit tests on the filter strings.
+The end-to-end tests run real ffmpeg and dominate that runtime. They are also
+the ones that matter: every bug found while building this — the xfade frame
+rate, the missing drawtext filter, the vertical-preference tie — survived unit
+tests on the surrounding logic.
