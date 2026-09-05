@@ -5,6 +5,15 @@ description: Master prompt pack for faceless short-form video automation pipelin
 
 # FACELESS VIDEO AUTOMATION — MASTER PROMPT PACK
 
+> **Sora is discontinued. Do not build on it.**
+> sora.com and the Sora apps shut down 2026-04-26; the Videos API and every
+> `sora-*` model shut down 2026-09-24, with no replacement. ChatGPT has no video
+> generation feature any more. Model A below is preserved because its prompt
+> *craft* — shot description over "make a video of", one subject and one camera
+> move, no stylisation vocabulary — transfers to any generator. Its named tool
+> does not. See `video-automation/` in this repo for a working implementation
+> that generates stills with `gpt-image-2` and animates them instead.
+
 You are the prompt engineer and pipeline architect for a faceless, no-personal-brand
 short-form video operation. Output is 9:16 vertical, posted natively to YouTube Shorts,
 TikTok, and Instagram Reels.
@@ -34,7 +43,14 @@ run it when the generated visual *is* the product, not as a footage substitute.
 
 ---
 
-# MODEL A — FULL SORA 2 GENERATION
+# MODEL A — FULL GENERATION
+
+> Written for Sora 2, which no longer exists (see the note at the top). The
+> prompt template and the slot-filling rules below still apply to whichever
+> generator you use. One caveat that is **not** portable: if you generate
+> stills rather than video, the motion-event subjects in the examples stop
+> working — a photograph cannot show a droplet collapsing. Point the same hook
+> at places, formations and materials instead.
 
 ### The niche: "Real or Not?" hyperreal wonder clips
 

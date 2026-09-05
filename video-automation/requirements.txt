@@ -1,0 +1,4 @@
+requests>=2.31
+# Static ffmpeg build, used only if no system ffmpeg is on PATH.
+# Remove this line if you install ffmpeg via apt/brew instead.
+imageio-ffmpeg>=0.5
